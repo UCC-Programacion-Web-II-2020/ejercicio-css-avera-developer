@@ -562,11 +562,11 @@ class csstidy_optimise
             switch($status)
             {
                 case 'st':
-                if($string{$i} == $sep && !(new csstidy)->escaped($string,$i))
+                if($string{$i} == $sep && !csstidy::escaped($string,$i))
                 {
                     ++$num;
                 }
-                elseif($string{$i} == '"' || $string{$i} == '\'' || $string{$i} == '(' && !(new csstidy)->escaped($string,$i))
+                elseif($string{$i} == '"' || $string{$i} == '\'' || $string{$i} == '(' && !csstidy::escaped($string,$i))
                 {
                     $status = 'str';
                     $to = ($string{$i} == '(') ? ')' : $string{$i};
@@ -579,7 +579,7 @@ class csstidy_optimise
                 break;
 
                 case 'str':
-                if($string{$i} == $to && !(new csstidy)->escaped($string,$i))
+                if($string{$i} == $to && !csstidy::escaped($string,$i))
                 {
                     $status = 'st';
                 }
@@ -612,7 +612,7 @@ class csstidy_optimise
 
         foreach($shorthands as $key => $value)
         {
-            if(isset($array[$value[0]]) && isset($array[$value[1]])
+            if(isset($value[0]) && isset($value[1]) && isset($value[2]) && isset($value[3]) &&  isset($array[$value[0]]) && isset($array[$value[1]])
             && isset($array[$value[2]]) && isset($array[$value[3]]) && $value !== 0)
             {
                 $return[$key] = '';
